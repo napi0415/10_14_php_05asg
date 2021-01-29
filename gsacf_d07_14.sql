@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: localhost
--- 生成日時: 2021 年 1 月 09 日 02:46
+-- 生成日時: 2021 年 1 月 29 日 02:33
 -- サーバのバージョン： 10.4.17-MariaDB
 -- PHP のバージョン: 8.0.0
 
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- データベース: `gsacf_d07_14`
 --
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `like_table`
+--
+
+CREATE TABLE `like_table` (
+  `id` int(12) NOT NULL,
+  `user_id` int(12) NOT NULL,
+  `todo_id` int(12) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- テーブルのデータのダンプ `like_table`
+--
+
+INSERT INTO `like_table` (`id`, `user_id`, `todo_id`, `created_at`) VALUES
+(1, 4, 9, '2021-01-21 21:52:09'),
+(2, 4, 10, '2021-01-21 21:52:23'),
+(3, 4, 11, '2021-01-21 21:59:08'),
+(4, 4, 12, '2021-01-21 21:59:09'),
+(5, 4, 13, '2021-01-21 21:59:10'),
+(13, 5, 9, '2021-01-29 02:01:47'),
+(14, 5, 10, '2021-01-29 02:01:50'),
+(17, 5, 14, '2021-01-29 02:01:56');
 
 -- --------------------------------------------------------
 
@@ -41,7 +68,7 @@ CREATE TABLE `todo_table` (
 
 INSERT INTO `todo_table` (`id`, `todo`, `deadline`, `created_at`, `updated_at`) VALUES
 (9, 'おおかみsuper', '2021-01-09', '2020-12-19 00:00:00', '2021-01-08 23:20:56'),
-(10, 'ぞう', '2020-12-19', '2020-12-19 00:00:00', '2020-12-19 16:22:42'),
+(10, 'ぞうをなでる', '2021-01-17', '2020-12-19 00:00:00', '2021-01-17 17:00:17'),
 (11, 'kikiki', '2020-12-12', '2020-12-19 17:25:07', '2020-12-19 17:25:07'),
 (12, 'gigigig', '2020-12-18', '2020-12-19 17:39:11', '2020-12-19 17:39:11'),
 (13, 'しばかり', '2020-12-25', '2020-12-24 05:12:27', '2020-12-24 05:12:27'),
@@ -55,6 +82,30 @@ INSERT INTO `todo_table` (`id`, `todo`, `deadline`, `created_at`, `updated_at`) 
 (21, '宿題', '2020-12-26', '2020-12-26 15:07:46', '2020-12-26 15:07:46'),
 (22, '買い物', '2020-12-27', '2020-12-26 15:09:20', '2020-12-26 15:09:20'),
 (23, '荷物運び', '2020-12-28', '2020-12-26 15:53:48', '2020-12-26 15:53:48');
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `u15_like_table`
+--
+
+CREATE TABLE `u15_like_table` (
+  `id` int(12) NOT NULL,
+  `user_id` int(12) NOT NULL,
+  `player_id` int(12) NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- テーブルのデータのダンプ `u15_like_table`
+--
+
+INSERT INTO `u15_like_table` (`id`, `user_id`, `player_id`, `created_at`) VALUES
+(10, 5, 2, '2021-01-29 02:42:37'),
+(11, 5, 3, '2021-01-29 02:42:39'),
+(12, 5, 4, '2021-01-29 02:42:40'),
+(13, 5, 5, '2021-01-29 02:42:41'),
+(15, 5, 1, '2021-01-29 03:23:33');
 
 -- --------------------------------------------------------
 
@@ -77,8 +128,10 @@ CREATE TABLE `users_table` (
 --
 
 INSERT INTO `users_table` (`id`, `username`, `password`, `is_admin`, `is_deleted`, `created_at`, `updated_at`) VALUES
-(1, 'goto', '1919weimarer', 0, 0, '2021-01-08 23:41:40', '2021-01-08 23:41:40'),
-(2, 'demo', 'yamakawa', 0, 0, '2021-01-09 10:44:55', '2021-01-09 10:44:55');
+(2, 'demo', 'yamakawa', 0, 0, '2021-01-09 10:44:55', '2021-01-09 10:44:55'),
+(3, 'napi0415', '794heian', 0, 0, '2021-01-09 17:25:06', '2021-01-09 17:25:06'),
+(4, 'goto', '1919weimarer', 0, 0, '2021-01-17 16:57:27', '2021-01-17 16:57:27'),
+(5, 'goto', '19760415', 0, 0, '2021-01-18 00:11:53', '2021-01-18 00:11:53');
 
 -- --------------------------------------------------------
 
@@ -142,9 +195,21 @@ INSERT INTO `wbc2018_u15_table` (`id`, `player_name`, `name_kana`, `player_posit
 --
 
 --
+-- テーブルのインデックス `like_table`
+--
+ALTER TABLE `like_table`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- テーブルのインデックス `todo_table`
 --
 ALTER TABLE `todo_table`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- テーブルのインデックス `u15_like_table`
+--
+ALTER TABLE `u15_like_table`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -164,16 +229,28 @@ ALTER TABLE `wbc2018_u15_table`
 --
 
 --
+-- テーブルの AUTO_INCREMENT `like_table`
+--
+ALTER TABLE `like_table`
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- テーブルの AUTO_INCREMENT `todo_table`
 --
 ALTER TABLE `todo_table`
   MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
+-- テーブルの AUTO_INCREMENT `u15_like_table`
+--
+ALTER TABLE `u15_like_table`
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- テーブルの AUTO_INCREMENT `users_table`
 --
 ALTER TABLE `users_table`
-  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- テーブルの AUTO_INCREMENT `wbc2018_u15_table`

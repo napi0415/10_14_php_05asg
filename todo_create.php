@@ -1,6 +1,9 @@
 <?php
 // var_dump($_POST);
 // exit();
+session_start();
+include("functions.php");
+check_session_id();
 if (
     !isset($_POST['player_name']) || $_POST['player_name'] == '' ||
     !isset($_POST['name_kana']) || $_POST['name_kana'] == '' ||
@@ -55,13 +58,7 @@ $user = 'root';
 $pwd = '';
 
 // DB接続
-try {
-    $pdo = new PDO($dbn, $user, $pwd);
-    // exit('ok');
-} catch (PDOException $e) {
-    echo json_encode(["db error" => "{$e->getMessage()}"]);
-    exit();
-}
+$pdo = connect_to_db();
 
 //sql作成実行
 $sql = 'INSERT INTO
@@ -92,7 +89,6 @@ $stmt->bindValue(':second_throw_1', $second_throw_1, PDO::PARAM_STR);
 $stmt->bindValue(':second_throw_2', $second_throw_2, PDO::PARAM_STR);
 $stmt->bindValue(':second_throw_3', $second_throw_3, PDO::PARAM_STR);
 $stmt->bindValue(':note', $note, PDO::PARAM_STR);
-
 $status = $stmt->execute();
 
 // データ登録処理後

@@ -10,7 +10,8 @@ $pdo = connect_to_db();
 
 
 // 参照はSELECT文!
-$sql = 'SELECT * FROM wbc2018_u15_table';
+// $sql = 'SELECT * FROM wbc2018_u15_table';
+$sql = 'SELECT * FROM wbc2018_u15_table LEFT OUTER JOIN (SELECT player_id, COUNT(id) AS cnt FROM u15_like_table GROUP BY player_id) AS likes ON wbc2018_u15_table.id = likes.player_id';
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
 // $statusにSQLの実行結果が入る(取得したデータではない点に注意)
@@ -45,7 +46,7 @@ if ($status == false) {
         $output .= "<td>{$record["second_throw_3"]}</td>";
         $output .= "<td>{$record["note"]}</td>";
         // edit deleteリンクを追加
-        $output .= "<td><a href='like_create.php?todo_id={$record["id"]}&user_id={$user_id}'>like{$record["cnt"]}</a></td>";
+        $output .= "<td><a href='like_create.php?player_id={$record["id"]}&user_id={$user_id}'>like{$record["cnt"]}</a></td>";
         $output .= "<td><a href='todo_edit.php?id={$record["id"]}'>edit</a></td>";
         $output .= "<td><a href='todo_delete.php?id={$record["id"]}'>delete</a></td>";
         $output .= "</tr>";
